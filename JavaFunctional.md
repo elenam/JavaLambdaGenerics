@@ -35,6 +35,32 @@ Let's say I want to count the number of elements in an array list that satisfy a
 		return count;
 	}
 ```
+Here `countElements` is a function that takes an array list of type `T` and a predicate `cond` that works on `T` and returns the number of elements in the array list for which the predicate returns `true`. 
+
+The expression `cond.test(element)` calls that method `test` declared in the Predicate interface on an array list element. 
+
+To call this method, one needs to provide a class that implements the Predicate interface. These classes are automatically generated from a concise anonymous function definition:
+
+```java
+(int n) -> (n % 2 == 0)
+```
+is an anonymous function that takes an int and returns `true` if it's even and `false` otherwise. In cases when the type of the parameter is uniquely determined from the body of the function, we don't need to specify the type:
+```java
+(n) -> (n % 2 == 0)
+``` 
+This works because `%` is defined only on ints. 
+
+Putting it all together, we can count even numbers in an array list of ints as follows:
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+
+countElements(numbers, (n) -> (n % 2 == 0));
+``` 
+If we want to count odd numbers, we just change the anonymous function: 
+```java
+countElements(numbers, (n) -> (n % 2 != 0));
+```
+
 
 
 
