@@ -60,11 +60,19 @@ If we want to count odd numbers, we just change the anonymous function:
 ```java
 countElements(numbers, (n) -> (n % 2 != 0));
 ```
+We can also use it on an array list of strings to count the number of strings of a specific length: 
+```java
+ArrayList<String> strings = new ArrayList<>();
 
-
-
-
-
+countElements(strings, (s) -> (s.length() < 4));
+```
+You can use `and` method of the Predicate interface to create combine prediactes into boolean expressions:
+```java
+		Predicate<String> notSmall = (s) -> (s.length() >= 2);
+		Predicate<String> notLarge = (s) -> (s.length() <= 4);
+		int countMediumStrings = countElements(strings, notSmall.and(notLarge));
+		System.out.println(countMediumStrings); 
+```
  
 
 
