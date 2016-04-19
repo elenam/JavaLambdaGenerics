@@ -39,7 +39,7 @@ Here `countElements` is a function that takes an array list of type `T` and a pr
 
 The expression `cond.test(element)` calls that method `test` declared in the Predicate interface on an array list element. 
 
-To call this method, one needs to provide a class that implements the Predicate interface. These classes are automatically generated from a concise anonymous function definition:
+To call this method, one needs to provide a class that implements the Predicate interface. These classes are automatically generated from a concise anonymous function definition known as a _lambda expression_ (despite not having a keyword "lambda"):
 
 ```java
 (int n) -> (n % 2 == 0)
@@ -66,14 +66,23 @@ ArrayList<String> strings = new ArrayList<>();
 
 countElements(strings, (s) -> (s.length() < 4));
 ```
-You can use `and` method of the Predicate interface to create combine prediactes into boolean expressions:
+You can use `and` method of the Predicate interface to combine prediactes into boolean expressions:
 ```java
 		Predicate<String> notSmall = (s) -> (s.length() >= 2);
 		Predicate<String> notLarge = (s) -> (s.length() <= 4);
 		int countMediumStrings = countElements(strings, notSmall.and(notLarge));
 		System.out.println(countMediumStrings); 
 ```
- 
+Likewise you can use `or` and `negate`. These are default methods provided with the interface (i.e. they actually are implemented). Note that `and` and 'or` are shortcircuiting, so they will be evaluated left-to-right only until the answer is determined. 
+
+Predicate is one of the interfacees provided by the java.util.function package. The package provides interfaces for other cases of functions. Because Java is statically typed and primitive types are different from each other and from object types, there is a variety of interfaces (for instance, `Function` represents and arbitrary function from one object type to another, and `DoubleFunction` is a function from a double to an arbitrary object type. There are also interfaces for functions with two arguments ("bi-functions"). A common method provided by an interface is `apply` (would be used similar to `test` in the example above). Functional interfaces for consumer/producer model operate via methods `accept\get` respectively. 
+
+## Discussion
+Functional features in Java are implemented using Interfaces and a _command_ design pattern. Command pattern allows you to pass an object with a predefined method name to any context in a program, and then call the method when needed. This is essentially a way of wrapping a function into an object, thus making it possible to assign it to a variable, pass it to a method, and even possibly modify it on the fly (assuming that the class you are passing around provides a method for modifications). This is a way of providing "first class citizens" behavior in a non-functional language. 
+
+Java implementation provides a large number of predefined interfaces for the Command pattern and syntax extension that allows you to write expressions that generate anonymous classes that implement these interfaces. 
+
+
 
 
 
