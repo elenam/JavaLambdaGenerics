@@ -78,6 +78,17 @@ Likewise you can use `or` and `negate`. These are default methods provided with 
 Predicate is one of the interfacees provided by the java.util.function package. The package provides interfaces for other cases of functions. Because Java is statically typed and primitive types are different from each other and from object types, there is a variety of interfaces (for instance, `Function` represents and arbitrary function from one object type to another, and `DoubleFunction` is a function from a double to an arbitrary object type. There are also interfaces for functions with two arguments ("bi-functions"). A common method provided by an interface is `apply` (would be used similar to `test` in the example above). Functional interfaces for consumer/producer model operate via methods `accept\get` respectively. 
 
 ## Error checking
+```java
+countElements(numbers, (s) -> (s.length() < 4))
+```
+Compiler error: `Method length is undefined for the type Integer`
+
+```java
+countElements(numbers, (n, m) -> (n % 2 == 0))
+```
+Compiler error: `Lambda expression's signature does not match the signature of the functional interface method test(Integer)`
+
+
 
 ## Discussion
 Functional features in Java are implemented using Interfaces and a _command_ design pattern. Command pattern allows you to pass an object with a predefined method name to any context in a program, and then call the method when needed. This is essentially a way of wrapping a function into an object, thus making it possible to assign it to a variable, pass it to a method, and even possibly modify it on the fly (assuming that the class you are passing around provides a method for modifications). This is a way of providing "first class citizens" behavior in a non-functional language. 
